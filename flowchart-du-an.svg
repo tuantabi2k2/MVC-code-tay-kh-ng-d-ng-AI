@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1850" viewBox="0 0 1800 1850" role="img" aria-labelledby="title desc">
+  <title id="title">Sơ đồ flowchart hoạt động của dự án MVC PHP</title>
+  <desc id="desc">Request đi từ trình duyệt qua Apache, index.php, khởi tạo MVC và router, sau đó đi nhánh index hiển thị view hoặc nhánh create lưu dữ liệu vào MySQL.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#475569"/>
+    </marker>
+    <style>
+      text { font-family: Arial, "Segoe UI", sans-serif; fill: #172033; }
+      .title { font-size: 34px; font-weight: 700; }
+      .subtitle { font-size: 19px; fill: #475569; }
+      .node-title { font-size: 23px; font-weight: 700; text-anchor: middle; }
+      .node-body { font-size: 18px; text-anchor: middle; }
+      .edge { fill: none; stroke: #475569; stroke-width: 3; marker-end: url(#arrow); }
+      .edge-label { font-size: 17px; font-weight: 700; fill: #334155; }
+    </style>
+  </defs>
+
+  <rect width="1800" height="1850" fill="#f8fafc"/>
+  <text x="900" y="55" class="title" text-anchor="middle">SƠ ĐỒ HOẠT ĐỘNG DỰ ÁN MVC PHP</text>
+  <text x="900" y="88" class="subtitle" text-anchor="middle">Hai nhánh xử lý chính: hiển thị trang index và tạo user trong MySQL</text>
+
+  <!-- Luồng khởi động chung -->
+  <path class="edge" d="M900 180 V235"/>
+  <path class="edge" d="M900 350 V405"/>
+  <path class="edge" d="M900 490 V545"/>
+  <path class="edge" d="M900 665 V720"/>
+  <path class="edge" d="M900 850 V875"/>
+
+  <ellipse cx="900" cy="140" rx="220" ry="40" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+  <text x="900" y="148" class="node-title">Trình duyệt gửi URL</text>
+
+  <rect x="590" y="240" width="620" height="110" rx="18" fill="#e0f2fe" stroke="#0284c7" stroke-width="3"/>
+  <text x="900" y="282" class="node-title">Apache · Public/.htaccess</text>
+  <text x="900" y="316" class="node-body">Viết lại URL thành index.php?url=...</text>
+
+  <rect x="700" y="410" width="400" height="80" rx="16" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+  <text x="900" y="459" class="node-title">Public/index.php</text>
+
+  <rect x="570" y="550" width="660" height="115" rx="18" fill="#ede9fe" stroke="#7c3aed" stroke-width="3"/>
+  <text x="900" y="592" class="node-title">app/init.php</text>
+  <text x="900" y="626" class="node-body">Nạp Composer autoload, cấu hình Eloquent, nạp App và Controller</text>
+
+  <rect x="590" y="725" width="620" height="125" rx="18" fill="#e0e7ff" stroke="#4f46e5" stroke-width="3"/>
+  <text x="900" y="770" class="node-title">App::__construct() · Router</text>
+  <text x="900" y="805" class="node-body">Tách URL thành controller, method và params</text>
+  <text x="900" y="830" class="node-body">Sau đó gọi phương thức trên controller</text>
+
+  <path d="M900 875 L1045 950 L900 1025 L755 950 Z" fill="#fef3c7" stroke="#d97706" stroke-width="3"/>
+  <text x="900" y="958" class="node-title">Chọn phương thức</text>
+
+  <!-- Nhánh index -->
+  <path class="edge" d="M755 950 H395 V1065"/>
+  <text x="520" y="935" class="edge-label">home/index/name</text>
+
+  <rect x="140" y="1070" width="510" height="100" rx="16" fill="#ede9fe" stroke="#7c3aed" stroke-width="3"/>
+  <text x="395" y="1110" class="node-title">home::index($name)</text>
+  <text x="395" y="1142" class="node-body">Hiện đang dùng $user chưa khai báo</text>
+
+  <path class="edge" d="M395 1170 V1205"/>
+  <rect x="140" y="1210" width="510" height="100" rx="16" fill="#e0f2fe" stroke="#0284c7" stroke-width="3"/>
+  <text x="395" y="1250" class="node-title">Controller::view()</text>
+  <text x="395" y="1282" class="node-body">Nạp view và truyền mảng $data</text>
+
+  <path class="edge" d="M395 1310 V1345"/>
+  <rect x="140" y="1350" width="510" height="100" rx="16" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+  <text x="395" y="1390" class="node-title">views/home/index.php</text>
+  <text x="395" y="1422" class="node-body">In HELLO và $data['name']</text>
+
+  <path class="edge" d="M395 1450 V1485"/>
+  <ellipse cx="395" cy="1540" rx="255" ry="52" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+  <text x="395" y="1548" class="node-title">HTML trả về trình duyệt</text>
+
+  <!-- Nhánh create -->
+  <path class="edge" d="M1045 950 H1405 V1065"/>
+  <text x="1260" y="935" class="edge-label">home/create/username/email</text>
+
+  <rect x="1100" y="1070" width="610" height="100" rx="16" fill="#ede9fe" stroke="#7c3aed" stroke-width="3"/>
+  <text x="1405" y="1110" class="node-title">home::create($username, $email)</text>
+  <text x="1405" y="1142" class="node-body">Nhận hai giá trị từ các đoạn URL</text>
+
+  <path class="edge" d="M1405 1170 V1205"/>
+  <rect x="1100" y="1210" width="610" height="100" rx="16" fill="#f1f5f9" stroke="#64748b" stroke-width="3"/>
+  <text x="1405" y="1250" class="node-title">Composer autoload</text>
+  <text x="1405" y="1282" class="node-body">Tìm và nạp class User từ classmap</text>
+
+  <path class="edge" d="M1405 1310 V1345"/>
+  <rect x="1100" y="1350" width="610" height="100" rx="16" fill="#e0f2fe" stroke="#0284c7" stroke-width="3"/>
+  <text x="1405" y="1390" class="node-title">User::create() · Eloquent</text>
+  <text x="1405" y="1422" class="node-body">Lọc fillable, gán timestamps và tạo INSERT</text>
+
+  <path class="edge" d="M1405 1450 V1485"/>
+  <path d="M1220 1510 C1220 1485 1590 1485 1590 1510 L1590 1575 C1590 1600 1220 1600 1220 1575 Z" fill="#ffedd5" stroke="#ea580c" stroke-width="3"/>
+  <ellipse cx="1405" cy="1510" rx="185" ry="25" fill="#ffedd5" stroke="#ea580c" stroke-width="3"/>
+  <path d="M1220 1575 C1220 1600 1590 1600 1590 1575" fill="none" stroke="#ea580c" stroke-width="3"/>
+  <text x="1405" y="1545" class="node-title">MySQL · website.users</text>
+  <text x="1405" y="1572" class="node-body">INSERT một hàng dữ liệu</text>
+
+  <path class="edge" d="M1405 1600 V1640 H1205 V1675"/>
+  <path class="edge" d="M1405 1600 V1640 H1605 V1675"/>
+
+  <rect x="1030" y="1680" width="350" height="105" rx="16" fill="#f1f5f9" stroke="#64748b" stroke-width="3"/>
+  <text x="1205" y="1723" class="node-title">HTTP response</text>
+  <text x="1205" y="1755" class="node-body">Hiện chưa có view hoặc redirect</text>
+
+  <rect x="1430" y="1680" width="350" height="105" rx="16" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+  <text x="1605" y="1723" class="node-title">phpMyAdmin</text>
+  <text x="1605" y="1755" class="node-body">Xem bảng website.users</text>
+
+  <text x="900" y="1825" class="subtitle" text-anchor="middle">Mũi tên biểu thị thứ tự xử lý trong request.</text>
+</svg>
